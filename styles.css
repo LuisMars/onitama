@@ -1,0 +1,854 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
+:root {
+    --card-width: 63.5mm;
+    --card-height: 88.9mm;
+    --border-radius: 3mm;
+    --grid-size: 5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f0f0f0;
+    padding: 20px;
+}
+
+/* Controls */
+.controls {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 100%;
+}
+
+.controls h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.control-section {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+}
+
+.control-section h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #333;
+    font-weight: 600;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 8px;
+}
+
+.control-section > label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.control-section label {
+    cursor: pointer;
+    display: block;
+    padding: 6px 4px;
+    user-select: none;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+    border-radius: 4px;
+}
+
+.control-section label:hover {
+    background-color: rgba(76, 175, 80, 0.05);
+}
+
+.control-section label input[type="checkbox"] {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    vertical-align: middle;
+    accent-color: #4CAF50;
+}
+
+/* Select dropdown */
+.size-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+.size-select:hover {
+    border-color: #4CAF50;
+}
+
+.size-select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.custom-size {
+    margin-top: 10px;
+    padding: 12px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.custom-size label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.custom-size label:hover {
+    background-color: transparent;
+}
+
+.custom-size input {
+    width: 100%;
+    max-width: 150px;
+    padding: 8px;
+    margin-top: 4px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.custom-size input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    flex: 1;
+    min-width: 150px;
+}
+
+.btn-primary {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.btn-secondary {
+    background: #2196F3;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #0b7dda;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+}
+
+/* Card Container */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10mm;
+    justify-content: center;
+    padding: 10mm;
+}
+
+/* Card */
+.card {
+    width: var(--card-width);
+    height: var(--card-height);
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 2mm;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.card.red {
+    border: 2px solid #d32f2f;
+}
+
+.card.blue {
+    border: 2px solid #1976d2;
+}
+
+.card.red::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 15mm;
+    background: #d32f2f;
+    z-index: 0;
+}
+
+.card.blue::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 15mm;
+    background: #1976d2;
+    z-index: 0;
+}
+
+.card-name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 7mm;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5mm;
+    margin-top: 2mm;
+    margin-bottom: 4mm;
+    position: relative;
+    z-index: 10;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    min-height: 8mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-grid-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Dual-grid container */
+.card-grid-container.dual-grid {
+    flex-direction: column;
+    gap: 2mm;
+}
+
+.grid-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grid-label {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 3mm;
+    font-weight: 400;
+    text-align: center;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.3mm;
+    margin-bottom: 1mm;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 1mm;
+    width: 100%;
+    max-width: 50mm;
+    aspect-ratio: 1;
+}
+
+/* Smaller grids for dual-grid cards */
+.card-grid.small {
+    max-width: 35mm;
+    gap: 0.5mm;
+}
+
+/* 3×5 grid for dual-grid cards (3 rows, 5 columns) */
+.card-grid.dual-grid-size {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    aspect-ratio: unset;
+    width: 100%;
+    max-width: 45mm;
+}
+
+/* Make dual-grid cells taller to maintain visual consistency */
+.card-grid.dual-grid-size .grid-cell {
+    aspect-ratio: 1;
+}
+
+.grid-cell {
+    background: #f0f4f8;
+    border: 1px solid #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 1mm;
+}
+
+.grid-cell.center {
+    background: #ffc107;
+}
+
+.grid-cell.center::after {
+    content: '';
+    width: 50%;
+    height: 50%;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #ffc107;
+}
+
+.grid-cell.move {
+    background: #333;
+}
+
+.grid-cell.move::after {
+    content: '';
+    width: 50%;
+    height: 50%;
+    background: #fff;
+    border-radius: 50%;
+}
+
+/* Mocked data indicator */
+.card.mocked {
+    border-style: dashed;
+    border-width: 2px;
+    position: relative;
+}
+
+.card.mocked::after {
+    content: '⚠ MOCK DATA';
+    position: absolute;
+    top: 11mm;
+    right: 2mm;
+    background: rgba(255, 193, 7, 0.9);
+    color: #000;
+    font-size: 2.5mm;
+    font-weight: bold;
+    padding: 1mm 2mm;
+    border-radius: 1mm;
+    z-index: 11;
+    letter-spacing: 0.2mm;
+}
+
+.card.mocked .card-grid-container {
+    opacity: 0.95;
+    background: rgba(255, 243, 224, 0.3);
+    border-radius: 2mm;
+}
+
+/* Compact mode */
+body.compact-headers .card {
+    padding: 2mm;
+}
+
+body.compact-headers .card.red::before,
+body.compact-headers .card.blue::before {
+    height: 10mm;
+}
+
+body.compact-headers .card-name {
+    font-size: 3.5mm;
+    margin-top: 0mm;
+    margin-bottom: 2mm;
+    min-height: 6mm;
+    letter-spacing: 0.3mm;
+}
+
+body.compact-headers .card.mocked::after {
+    top: 8mm;
+    font-size: 2mm;
+    padding: 0.75mm 1.5mm;
+}
+
+body.compact-headers .card-grid-container.dual-grid {
+    gap: 1mm;
+}
+
+body.compact-headers .grid-label {
+    font-size: 2.5mm;
+    margin-bottom: 0.5mm;
+    letter-spacing: 0.2mm;
+}
+
+/* No headers mode */
+body.no-headers .card::before {
+    display: none;
+}
+
+body.no-headers .card-name {
+    display: none;
+}
+
+/* No headers mode: show color badges */
+body.no-headers .card.red::after {
+    content: 'R';
+    position: absolute;
+    top: 2mm;
+    left: 2mm;
+    background: #d32f2f;
+    color: white;
+    font-size: 2.5mm;
+    font-weight: bold;
+    padding: 0.5mm 1.5mm;
+    border-radius: 1mm;
+    z-index: 11;
+}
+
+body.no-headers .card.blue::after {
+    content: 'B';
+    position: absolute;
+    top: 2mm;
+    left: 2mm;
+    background: #1976d2;
+    color: white;
+    font-size: 2.5mm;
+    font-weight: bold;
+    padding: 0.5mm 1.5mm;
+    border-radius: 1mm;
+    z-index: 11;
+}
+
+/* No headers + B&W mode: make color badges black text on gray background */
+body.bw-mode.no-headers .card.red::after,
+body.bw-mode.no-headers .card.blue::after {
+    background: #e0e0e0;
+    color: black;
+}
+
+/* Black and white mode */
+body.bw-mode .card.red::before,
+body.bw-mode .card.blue::before {
+    background: #333;
+}
+
+body.bw-mode .card.red,
+body.bw-mode .card.blue {
+    border-color: #333;
+}
+
+body.bw-mode .grid-cell.center {
+    background: #999;
+}
+
+body.bw-mode .grid-cell.center::after {
+    box-shadow: 0 0 0 2px #999;
+}
+
+/* Color indicator badge in B&W mode */
+body.bw-mode .card.red::after {
+    content: 'R';
+    position: absolute;
+    top: 2mm;
+    left: 2mm;
+    color: white;
+    font-size: 2.5mm;
+    font-weight: bold;
+    padding: 0.5mm 1.5mm;
+    border-radius: 1mm;
+    z-index: 11;
+}
+
+body.bw-mode .card.blue::after {
+    content: 'B';
+    position: absolute;
+    top: 2mm;
+    left: 2mm;
+    color: white;
+    font-size: 2.5mm;
+    font-weight: bold;
+    padding: 0.5mm 1.5mm;
+    border-radius: 1mm;
+    z-index: 11;
+}
+
+body.bw-mode .card-back {
+    background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
+    border: 3mm solid #000;
+    box-shadow: inset 0 0 0 1mm #555;
+}
+
+/* Ink Saving Mode - minimal ink with colored text instead of backgrounds */
+body.ink-saving .card {
+    background: white !important;
+    box-shadow: none !important;
+}
+
+body.ink-saving .card::before {
+    background: white !important;
+    border-bottom: 1px solid #ddd !important;
+}
+
+body.ink-saving .card.red .card-name {
+    color: #d32f2f !important;
+    text-shadow: none !important;
+}
+
+body.ink-saving .card.blue .card-name {
+    color: #1976d2 !important;
+    text-shadow: none !important;
+}
+
+body.ink-saving .card-grid {
+    background: white !important;
+}
+
+body.ink-saving .grid-cell {
+    background: white !important;
+    border-color: #ddd !important;
+}
+
+body.ink-saving .grid-cell.center {
+    background: white !important;
+    border: 2px solid #333 !important;
+}
+
+body.ink-saving .grid-cell.center::after {
+    box-shadow: none !important;
+}
+
+body.ink-saving .grid-cell.move {
+    background: white !important;
+    border: 2px solid #333 !important;
+}
+
+body.ink-saving .grid-cell.move::after {
+    border-width: 2px !important;
+}
+
+body.ink-saving .card-back {
+    background: white !important;
+    color: #333 !important;
+    border: 2px solid #333 !important;
+    box-shadow: none !important;
+}
+
+/* When both B&W and ink-saving are enabled, keep text black */
+body.bw-mode.ink-saving .card.red .card-name,
+body.bw-mode.ink-saving .card.blue .card-name {
+    color: #000 !important;
+}
+
+body.bw-mode.ink-saving .card-back {
+    background: white !important;
+    color: #000 !important;
+    border: 2px solid #000 !important;
+    box-shadow: none !important;
+}
+
+/* Card back */
+.card-back {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ecf0f1;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 10mm;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2mm;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    border: 3mm solid #1a252f;
+    box-shadow: inset 0 0 0 1mm #4a5f7f;
+    position: relative;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+
+/* Print styles */
+@media print {
+    @page {
+        margin: 5mm;
+    }
+
+    body {
+        background: white;
+        padding: 0;
+        margin: 0;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .card-container {
+        gap: 5mm;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, var(--card-width));
+        justify-content: center;
+        align-content: start;
+    }
+
+    .card {
+        box-shadow: none;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border-radius: 0 !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .card.red::before {
+        background: #d32f2f !important;
+    }
+
+    .card.blue::before {
+        background: #1976d2 !important;
+    }
+
+    body.bw-mode .card.red::before,
+    body.bw-mode .card.blue::before {
+        background: #333 !important;
+    }
+
+    body.bw-mode .card.red,
+    body.bw-mode .card.blue {
+        border-color: #333 !important;
+    }
+
+    .card-back {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%) !important;
+        border: 3mm solid #1a252f !important;
+        box-shadow: inset 0 0 0 1mm #4a5f7f !important;
+        writing-mode: vertical-rl !important;
+        transform: rotate(180deg) !important;
+    }
+
+    body.bw-mode .card-back {
+        background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%) !important;
+        border: 3mm solid #000 !important;
+        box-shadow: inset 0 0 0 1mm #555 !important;
+    }
+
+    body.bw-mode .grid-cell.center {
+        background: #999 !important;
+    }
+
+    body.bw-mode .grid-cell.center::after {
+        box-shadow: 0 0 0 2px #999 !important;
+    }
+
+    body.compact-headers .card.red::before,
+    body.compact-headers .card.blue::before {
+        height: 10mm !important;
+    }
+
+    body.no-gaps .card-container {
+        gap: 0 !important;
+        padding: 0 !important;
+    }
+
+    body.no-headers .card::before {
+        display: none !important;
+    }
+
+    body.no-headers .card-name {
+        display: none !important;
+    }
+
+    body.no-headers .card.red::after {
+        content: 'R';
+        position: absolute;
+        background: #d32f2f;
+        color: white;
+        font-weight: bold;
+        z-index: 11;
+    }
+
+    body.no-headers .card.blue::after {
+        content: 'B';
+        position: absolute;
+        background: #1976d2;
+        color: white;
+        font-weight: bold;
+        z-index: 11;
+    }
+
+    body.bw-mode.no-headers .card.red::after,
+    body.bw-mode.no-headers .card.blue::after {
+        background: #e0e0e0 !important;
+        color: black !important;
+    }
+
+    /* Ink saving mode in print */
+    body.ink-saving .card {
+        background: white !important;
+        box-shadow: none !important;
+    }
+
+    body.ink-saving .card::before {
+        background: white !important;
+        border-bottom: 1px solid #ddd !important;
+    }
+
+    body.ink-saving .card.red .card-name {
+        color: #d32f2f !important;
+        text-shadow: none !important;
+    }
+
+    body.ink-saving .card.blue .card-name {
+        color: #1976d2 !important;
+        text-shadow: none !important;
+    }
+
+    body.ink-saving .grid-cell {
+        background: white !important;
+        border-color: #ddd !important;
+    }
+
+    body.ink-saving .grid-cell.center {
+        background: white !important;
+        border: 2px solid #333 !important;
+    }
+
+    body.ink-saving .grid-cell.move {
+        background: white !important;
+        border: 2px solid #333 !important;
+    }
+
+    body.ink-saving .card-back {
+        background: white !important;
+        color: #333 !important;
+        border: 2px solid #333 !important;
+        box-shadow: none !important;
+    }
+
+    /* When both B&W and ink-saving are enabled in print, keep text black */
+    body.bw-mode.ink-saving .card.red .card-name,
+    body.bw-mode.ink-saving .card.blue .card-name {
+        color: #000 !important;
+    }
+
+    body.bw-mode.ink-saving .card-back {
+        background: white !important;
+        color: #000 !important;
+        border: 2px solid #000 !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Responsive design for mobile and tablets */
+@media (max-width: 1024px) {
+    .controls-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .controls {
+        padding: 15px;
+    }
+
+    .controls h1 {
+        font-size: 1.5rem;
+    }
+
+    .controls-grid {
+        gap: 15px;
+    }
+
+    .control-section {
+        padding: 12px;
+    }
+
+    .control-section h2 {
+        font-size: 15px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .card-container {
+        gap: 5mm;
+        padding: 5mm;
+    }
+
+    .size-select {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+
+    .custom-size input {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .controls {
+        padding: 10px;
+    }
+
+    .controls-grid {
+        gap: 10px;
+    }
+
+    .control-section {
+        padding: 10px;
+    }
+
+    .control-section h2 {
+        font-size: 14px;
+        padding-bottom: 6px;
+    }
+
+    .card-container {
+        gap: 3mm;
+        padding: 3mm;
+    }
+}
