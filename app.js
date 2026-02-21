@@ -1,21 +1,8 @@
-// Card size presets (in mm)
-const CARD_SIZES = {
-    poker: { width: 63.5, height: 88.9 },          // Poker/TCG (2.5" × 3.5")
-    bridge: { width: 57, height: 89 },             // Bridge (2.25" × 3.5")
-    'mini-euro': { width: 44, height: 68 },        // Mini European
-    'standard-euro': { width: 59, height: 92 },    // Standard European
-    tarot: { width: 70, height: 120 },             // Tarot (2.75" × 4.75")
-    'square-small': { width: 70, height: 70 },     // Small Square
-    'square-large': { width: 88, height: 88 },     // Large Square
-    jumbo: { width: 89, height: 146 },             // Jumbo (3.5" × 5.75")
-    custom: { width: 63.5, height: 88.9 }          // Custom
-};
-
 // Application state
 const state = {
-    cardSize: 'poker',
+    cardSize: 'standard-card-game',
     customWidth: 63.5,
-    customHeight: 88.9,
+    customHeight: 88,
     selectedSets: ['base', 'senseis-path', 'wind-move', 'wind-spirit', 'promo'],
     blackAndWhite: false,
     inkSaving: false,
@@ -53,6 +40,11 @@ function loadState() {
 
 // Restore UI elements from state
 function restoreUIFromState() {
+    // Fallback if saved card size no longer exists
+    if (!CARD_SIZES[state.cardSize]) {
+        state.cardSize = 'standard-card-game';
+    }
+
     // Restore card size selection
     const sizeSelect = document.getElementById('cardSizeSelect');
     sizeSelect.value = state.cardSize;
@@ -92,10 +84,30 @@ function restoreUIFromState() {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadState();
+    populateSizeDropdown();
     initializeControls();
     restoreUIFromState();
     generateCards();
 });
+
+// Populate size dropdown from CARD_SIZES with optgroup separators
+function populateSizeDropdown() {
+    const sizeSelect = document.getElementById('cardSizeSelect');
+    sizeSelect.innerHTML = '';
+    const groups = {};
+    Object.entries(CARD_SIZES).forEach(([key, size]) => {
+        const groupName = size.group || 'Other';
+        if (!groups[groupName]) {
+            groups[groupName] = document.createElement('optgroup');
+            groups[groupName].label = groupName;
+            sizeSelect.appendChild(groups[groupName]);
+        }
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = size.label;
+        groups[groupName].appendChild(option);
+    });
+}
 
 // Initialize control listeners
 function initializeControls() {
@@ -116,7 +128,7 @@ function initializeControls() {
         saveState();
     });
     document.getElementById('customHeight').addEventListener('input', () => {
-        state.customHeight = parseFloat(document.getElementById('customHeight').value) || 88.9;
+        state.customHeight = parseFloat(document.getElementById('customHeight').value) || 88;
         updateCardSize();
         saveState();
     });

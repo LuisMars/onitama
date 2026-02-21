@@ -14,17 +14,7 @@
             <div class="control-section">
                 <h2>Card Size</h2>
                 <label for="cardSizeSelect">Select Size:</label>
-                <select id="cardSizeSelect" class="size-select">
-                    <option value="poker">Poker/TCG (2.5" × 3.5" / 63.5mm × 88.9mm)</option>
-                    <option value="bridge">Bridge (2.25" × 3.5" / 57mm × 89mm)</option>
-                    <option value="mini-euro">Mini European (44mm × 68mm)</option>
-                    <option value="standard-euro">Standard European (59mm × 92mm)</option>
-                    <option value="tarot">Tarot (2.75" × 4.75" / 70mm × 120mm)</option>
-                    <option value="square-small">Small Square (70mm × 70mm)</option>
-                    <option value="square-large">Large Square (88mm × 88mm)</option>
-                    <option value="jumbo">Jumbo (3.5" × 5.75" / 89mm × 146mm)</option>
-                    <option value="custom">Custom Size</option>
-                </select>
+                <select id="cardSizeSelect" class="size-select"></select>
                 <div class="custom-size" id="customSize" style="display: none;">
                     <label>
                         Width: <input type="number" id="customWidth" value="63.5" step="0.1"> mm
@@ -96,6 +86,7 @@
 
     <div id="cardContainer" class="card-container"></div>
 
+    <script src="card-sizes.js"></script>
     <script src="cards-data.js"></script>
     <script src="app.js"></script>
 </body>
